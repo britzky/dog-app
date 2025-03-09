@@ -1,0 +1,30 @@
+name: Docker Image CI for GHCR
+
+on:
+  push:
+    branches:
+      main
+
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Log in to Github Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      
+      - name: Build and push Frontend
+        run: |
+          docker build ./frontend -t ghcr.io/${{ github.actor }}/frontend:latest
+          docker push ghcr.io/${{ github.actor }}/frontend:latest
+      
+      - name: Build and push Backend
+        run: |
+          docker build ./backend -t ghcr.io${{ github.actor }}/backend:latest
+          docker push ghcr.io${{ github.actor }}/backend:latest
