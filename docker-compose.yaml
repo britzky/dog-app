@@ -1,0 +1,13 @@
+services: 
+  frontend:
+    build: ./frontend
+    container_name: dog_frontend
+    ports:
+      - '5173:5173'
+  backend:
+    build: ./backend
+    container_name: dog_backend
+    ports:
+      - '3000:3000'
+    stdin_open: true
+    tty: true
