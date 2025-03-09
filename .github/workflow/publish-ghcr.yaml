@@ -26,5 +26,5 @@ jobs:
       
       - name: Build and push Backend
         run: |
-          docker build ./backend -t ghcr.io${{ github.actor }}/backend:latest
+          docker build ./backend -t ghcr.io/${{ github.actor }}/backend:latest
           docker push ghcr.io${{ github.actor }}/backend:latest
